@@ -1,0 +1,12 @@
+.floatingburger {
+    position: absolute;
+    z-index: 100;
+
+}
+
+.relativepos {
+    position: relative;
+    height: 1000px;
+    width: 970px;
+    background-color:  lightblue;
+}

@@ -1,0 +1,15 @@
+
+.header {
+    padding: 15px 0px;
+    display: block;
+}
+
+h1 {
+    display: inline-block;
+    width: 600px;
+}
+
+a {
+    text-align: right;
+}
+

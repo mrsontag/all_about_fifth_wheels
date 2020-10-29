@@ -1,0 +1,10 @@
+.smallplan {
+    width: 200px;
+    height: 400px;
+    display: inline-block;
+    background-color: lightgreen;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 7px;
+    padding: 5px;
+}
