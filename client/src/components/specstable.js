@@ -3,14 +3,12 @@ import React from 'react';
 
 const SpecsTable = props => {
     const { specs } = props;
-    console.log("Specs are:");
-    console.log(specs);
-
+    
     const showwhich = {
-        "Length": "Length",
-        "Width": "Width",
-        "Height": "Height",
-        "Weight": "Weight"
+        "Length": "length",
+        "Width": "width",
+        "Height": "height",
+        "Weight": "weight"
     }
 
     return (

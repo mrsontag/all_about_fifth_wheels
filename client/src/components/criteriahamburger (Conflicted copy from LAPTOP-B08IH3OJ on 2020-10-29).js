@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import CriteriaBar from "./criteria_bar";
-import CriteriaBarNew from './criteria_bar_new';
+//import CriteriaBarNew from './criteria_bar_new';
 
 const TabPanel = props => {
     const { children, value, index, ...other } = props;
@@ -50,14 +50,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 const CriteriaHamburger = props => {
-    const { criteria, setCriteria } = props;
+    const { criteria, setCritiera } = props;
     const [value, setValue] = React.useState(0);
     const classes = useStyles();
     const [ length, setLength ] = useState([24,60]);
     const [ width, setWidth ] = useState([96,103]);
     const [ height, setHeight ] = useState([144,160]);
 
-    
+    console.log(criteria);
+
     return (
         <div className={classes.root}>
             <Tabs
@@ -78,7 +79,7 @@ const CriteriaHamburger = props => {
                 <p>Models:</p>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <CriteriaBarNew fieldname="Length New: " criteriapath="specs.length" criteria={criteria} setCriteria={setCriteria} min={20} max={60} />
+                <CriteriaBar fieldname="Length: " value={length} min={96} max={103} setvalue={ setLength } />
                 <CriteriaBar fieldname="Width: " value={width} min={96} max={103} setvalue={ setWidth } />
                 <CriteriaBar fieldname="Height: " value={height} min={144} max={160} setvalue={ setHeight } />
                 

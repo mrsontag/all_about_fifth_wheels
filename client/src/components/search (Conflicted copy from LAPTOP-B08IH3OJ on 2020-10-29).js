@@ -4,7 +4,6 @@ import CriteriaHamburger from "./criteriahamburger";
 import styles from "./search.module.css";
 import SmallFloorPlan from "./smallfloorplan";
 import Axios from 'axios';
-import { set } from 'lodash';
 
 const _ = require('lodash');
 
@@ -12,24 +11,26 @@ const Search = props => {
     const [showsearch, setShowSearch ] = useState(false);
     const [allplans, setAllPlans] = useState([]);
     const [results, setResults ] = useState([]);
-    const [whichcriteria, setWhichCriteria] = useState(true);
-
-    const [criteria, setCriteria ] = useState({
-            "specs.length": {
+    const [criteria, setCriteria ] = useState(
+        [
+            {
+                path: "specs.length",
                 type: "range",
-                min: 20,
-                max: 60
+                min: 37,
+                max: 45
             },
-            "specs.height": {
+            {
+                path: "specs.height",
                 type: "range",
-                min: 10,
-                max: 20
+                min: 13.2,
+                max: 15
             }
-        });
+        ]
+        );
 
     useEffect(() => {
         Axios.get("http://localhost:8000/api/fivers/")
-            .then(res => { setAllPlans(res.data); setResults(res.data) })
+            .then(res => { console.log(res); setAllPlans(res.data); setResults(res.data) })
             .catch(err => console.log(err));
     },[])
 
@@ -37,45 +38,13 @@ const Search = props => {
         setResults(allplans.filter(matchesSearch));
     }, [criteria]);
 
-    const changeCriteria = () => {
-        if (whichcriteria) {
-            setCriteria( {
-                "specs.length": {
-                    type: "range",
-                    min: 37,
-                    max: 45
-                },
-                "specs.height": {
-                    type: "range",
-                    min: 13.2,
-                    max: 15
-                }
-            });
-        } else {
-            setCriteria({
-                "specs.length": {
-                    type: "range",
-                    min: 20,
-                    max: 60
-                },
-                "specs.height": {
-                    type: "range",
-                    min: 10,
-                    max: 20
-                }
-            });
-        }
-        setWhichCriteria(!whichcriteria)
-    }
-    
     const matchesSearch = (fiver) => {
-        let filterkeys = Object.keys(criteria);
-        for(let i=0; i<filterkeys.length; i++) {
-            switch(criteria[filterkeys[i]].type) {
+        for(let i=0; i<criteria.length; i++) {
+            switch(criteria[i].type) {
                 case "range":
-                    let value = parseFloat(_.get(fiver, filterkeys[i]));
-                    //console.log("Value is:" + value + ", Criteria Min is " + criteria[i].min + " and Max is " + criteria[i].max);
-                    if( criteria[filterkeys[i]].min > value || value > criteria[filterkeys[i]].max) { return false };
+                    let value = parseFloat(_.get(fiver, criteria[i].path));
+                    console.log("Value is:" + value);
+                    return( criteria[i].min <= value && value <= criteria[i].max);
                     break;
             }
         }
@@ -97,7 +66,6 @@ const Search = props => {
             <div onClick={(e) => { e.stopPropagation(); setShowSearch(true)}}>Show Search</div>
         )
     }
-
     return(
         <div className={styles.relativepos} onClick={() => setShowSearch(false)}>
             { SearchBlock() }
@@ -108,7 +76,6 @@ const Search = props => {
                     )})
                 }
             </div>
-            <button type="button" name="changecriteria" onClick={changeCriteria}>Click to change criteria</button>
         </div>
     );
 }
