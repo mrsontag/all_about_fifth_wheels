@@ -2,21 +2,18 @@ import React from 'react';
 import styles from "./smallfloorplan.module.css";
 import SpecsTable from "./specstable";
 import LinkedImage from "./linked_image";
+import { Link } from '@reach/router';
 
 const SmallFloorPlan = props => {
-    const { imgsource } = props;
-    const specs = {
-        "Length": 37,
-        "Width": 103,
-        "Height": `13'4"`,
-        "Weight": '11010 lbs',
-        "Overall Floor Plan": "Front Kitchen"
-    }
+    const { specs } = props;
     return (
-        <div className={styles.smallplan}>
-            <LinkedImage src={imgsource} width="180" height="100" />
-            <SpecsTable specs={specs} />
-        </div>
+        <Link to={"/floorplan/" + specs._id}>
+
+            <div className={styles.smallplan}>
+                <LinkedImage src={specs.floorplanimg} width="180" height="100" />
+                <SpecsTable specs={specs.specs} />
+            </div>
+        </Link>
     )
 }
 

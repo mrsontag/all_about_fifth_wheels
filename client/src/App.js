@@ -5,6 +5,7 @@ import { Router } from "@reach/router";
 import Welcome from './components/welcome';
 import Resources from "./components/resources";
 import News from "./components/news";
+import FloorPlanPage from "./components/floorplanpage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Header />
 
         <Router>
+          <FloorPlanPage path="/floorplan/:id" />
           <Welcome path="/" />
           <Search path="/search" />
           <Resources path="/resources" />

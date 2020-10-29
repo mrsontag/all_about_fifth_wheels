@@ -39,10 +39,11 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
         height: 224,
-        width: 300
+        width: 400
     },
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
+        width: 150
     },
 }));
 
@@ -52,6 +53,8 @@ const CriteriaHamburger = props => {
     const [value, setValue] = React.useState(0);
     const classes = useStyles();
     const [ length, setLength ] = useState([24,60]);
+    const [ width, setWidth ] = useState([96,103]);
+    const [ height, setHeight ] = useState([144,160]);
 
     const UpdateValue = (key, value) => {
 
@@ -77,8 +80,9 @@ const CriteriaHamburger = props => {
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <CriteriaBar fieldname="Length: " value={length} min={24} max={60} setvalue={ setLength } />
-                Width:
-                Height:
+                <CriteriaBar fieldname="Width: " value={width} min={96} max={103} setvalue={ setWidth } />
+                <CriteriaBar fieldname="Height: " value={height} min={144} max={160} setvalue={ setHeight } />
+                
             </TabPanel>
             <TabPanel  value={value} index={2}>
                 Floorplans

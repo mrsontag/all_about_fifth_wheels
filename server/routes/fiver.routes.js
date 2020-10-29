@@ -1,4 +1,4 @@
-const FiverController = require("../controllers/user.controller");
+const FiverController = require("../controllers/fiver.controller");
 
 module.exports = app => {
   app.get("/api/fivers/", FiverController.findAllFivers);

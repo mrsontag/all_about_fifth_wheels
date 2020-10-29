@@ -65,7 +65,7 @@ const FiverSchema = new mongoose.Schema({
 		low: Number,
 		high: Number
 	}
-});
+},{timestamps: true});
 
 const Fiver = mongoose.model("Fiver", FiverSchema);
 
