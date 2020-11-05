@@ -6,7 +6,11 @@
 
 .relativepos {
     position: relative;
-    height: 1000px;
-    width: 970px;
-    background-color:  lightblue;
+    min-height: 100%;
 }
+
+.criteria_summary {
+    background-color: white;
+    width: 970px;
+}
+

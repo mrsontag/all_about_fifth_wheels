@@ -1,0 +1,19 @@
+.columns {
+    width: 420px;
+    display: inline-block;
+    vertical-align: top;   
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.columns input {
+    margin: 5px;
+}
+
+.columns img {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+}

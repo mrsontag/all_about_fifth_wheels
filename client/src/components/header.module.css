@@ -1,8 +1,10 @@
 
 .header {
-    padding: 15px 0px;
+    padding-top: 15px;
     display: block;
 }
+
+
 
 h1 {
     display: inline-block;

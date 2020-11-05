@@ -4,7 +4,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import CriteriaBar from "./criteria_bar";
 import CriteriaBarNew from './criteria_bar_new';
 
 const TabPanel = props => {
@@ -78,9 +77,9 @@ const CriteriaHamburger = props => {
                 <p>Models:</p>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <CriteriaBarNew fieldname="Length New: " criteriapath="specs.length" criteria={criteria} setCriteria={setCriteria} min={20} max={60} />
-                <CriteriaBar fieldname="Width: " value={width} min={96} max={103} setvalue={ setWidth } />
-                <CriteriaBar fieldname="Height: " value={height} min={144} max={160} setvalue={ setHeight } />
+                <CriteriaBarNew fieldname="Length: " criteriapath="specs.length" criteria={criteria} setCriteria={setCriteria} min={20} max={60} />
+                <CriteriaBarNew fieldname="Width: " criteriapath="specs.width" criteria={criteria} setCriteria={setCriteria} min={96} max={103} />
+                <CriteriaBarNew fieldname="Height: " criteriapath="specs.height" criteria={criteria} setCriteria={setCriteria} min={144} max={160} />
                 
             </TabPanel>
             <TabPanel  value={value} index={2}>

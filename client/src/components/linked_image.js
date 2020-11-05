@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import Axios from 'axios';
 
 const LinkedImage = props => {
     const { alt, src, width, height, letmagnify, linkto } = props;

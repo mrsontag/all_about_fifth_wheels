@@ -1,16 +1,7 @@
 import React, {useState} from 'react';
-//import { makeStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input'
-
-/*const useStyles = makeStyles({
-    root: {
-        width: 300,
-    },
-});
-*/
 
 function valuetext(value) {
     return `${value}°C`;
@@ -18,19 +9,28 @@ function valuetext(value) {
 
 const CriteriaBar = props => {
     const {fieldname, criteria, setCriteria, criteriapath, min, max} = props;
-    const [value, newValue ] = useState([])
-    const [low, setLow] = useState(min);
-    const [high, setHigh] = useState(max);
+    //const [value, newValue ] = useState([])
+    const [low, setLow] = useState(criteria[criteriapath] ? criteria[criteriapath].min : min);
+    const [high, setHigh] = useState(criteria[criteriapath] ? criteria[criteriapath].max : max);
 
+    
     const handleChange = (event, newValue) => {
-        setCriteria({
-            ...criteria, 
-            [criteriapath]: {
-                type: "range",
-                min: newValue[0],
-                max: newValue[1]
-            }
-        })
+        if(newValue[0] === min && newValue[1] === max) {
+            setCriteria({
+                ...criteria,
+                [criteriapath]: undefined
+            })
+        } else {
+            setCriteria({
+                ...criteria, 
+                [criteriapath]: {
+                    name: fieldname,
+                    type: "range",
+                    min: newValue[0],
+                    max: newValue[1]
+                }
+            })
+        }
         setLow(newValue[0]);
         setHigh(newValue[1]);
     };
@@ -42,6 +42,23 @@ const CriteriaBar = props => {
     const changeHigh = (event) => {
         setHigh(event.target.value === '' ? '' : Number(event.target.value));
     };
+
+    const formattedFieldName = () => {
+        if(typeof(criteria[criteriapath]) !== "undefined") {
+            return(
+                <>
+                    {fieldname}
+                </>
+            )
+        } else {
+            return(
+                <strike>
+                    {fieldname}
+                </strike>
+            );
+        }
+        
+    }
 //className={classes.root}
 /*
 <Typography id="range-slider" gutterBottom>
@@ -51,7 +68,7 @@ const CriteriaBar = props => {
             */
     return (
         <div >
-            {fieldname}
+            {formattedFieldName()}
             <Grid container spacing={2} alignItems="center">
                 <Grid item xs={3}>
                     <Input
@@ -61,8 +78,8 @@ const CriteriaBar = props => {
                         //onBlur={handleBlur}
                         inputProps={{
                         step: "any",
-                        min: 0,
-                        max: 100,
+                        min: min,
+                        max: max,
                         type: 'number',
                         'aria-labelledby': 'input-slider',
                         }}
@@ -72,11 +89,8 @@ const CriteriaBar = props => {
                     <Slider
                         value={[low, high]}
                         onChange={handleChange}
-                        //valueLabelDisplay="none"
                         min={ min }
                         max={ max }
-                        aria-labelledby="range-slider"
-                        getAriaValueText={() => `${value}°C`}
                     />
                 </Grid>
                 <Grid item xs={3}>
