@@ -1,28 +1,35 @@
 import React, {useState} from 'react';
-//import { makeStyles } from '@material-ui/core/styles';
-//import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input'
 
-/*const useStyles = makeStyles({
-    root: {
-        width: 300,
-    },
-});
-*/
-
-function valuetext(value) {
-    return `${value}°C`;
-}
 
 const CriteriaBar = props => {
-    //const classes = useStyles();
-    const {fieldname, value, setvalue, min, max} = props;
-    const [low, setLow] = useState(value[0]);
-    const [high, setHigh] = useState(value[1]);
+    const {fieldname, criteria, setCriteria, criteriapath, min, max} = props;
+    //const [value, newValue ] = useState([])
 
+    
+    const [low, setLow] = useState(criteria[criteriapath] ? criteria[criteriapath].min : min);
+    const [high, setHigh] = useState(criteria[criteriapath] ? criteria[criteriapath].max : max);
+
+    
     const handleChange = (event, newValue) => {
+        if(newValue[0] === min && newValue[1] === max) {
+            setCriteria({
+                ...criteria,
+                [criteriapath]: undefined
+            })
+        } else {
+            setCriteria({
+                ...criteria, 
+                [criteriapath]: {
+                    name: fieldname,
+                    type: "range",
+                    min: newValue[0],
+                    max: newValue[1]
+                }
+            })
+        }
         setLow(newValue[0]);
         setHigh(newValue[1]);
     };
@@ -34,57 +41,36 @@ const CriteriaBar = props => {
     const changeHigh = (event) => {
         setHigh(event.target.value === '' ? '' : Number(event.target.value));
     };
-//className={classes.root}
-/*
-<Typography id="range-slider" gutterBottom>
-                {fieldname}
-            </Typography>
-            
-            */
+
+    const formattedFieldName = () => {
+        if(typeof(criteria[criteriapath]) !== "undefined") {
+            return(
+                <>
+                    {fieldname}
+                </>
+            )
+        } else {
+            return(
+                <strike>
+                    {fieldname}
+                </strike>
+            );
+        }
+        
+    }
+
     return (
         <div >
-            {fieldname}
+            {formattedFieldName()}
             <Grid container spacing={2} alignItems="center">
                 <Grid item xs={3}>
-                    <Input
-                        value={low}
-                        margin="dense"
-                        onChange={changeLow}
-                        //onBlur={handleBlur}
-                        inputProps={{
-                        step: "any",
-                        min: 0,
-                        max: 100,
-                        type: 'number',
-                        'aria-labelledby': 'input-slider',
-                        }}
-                    />
+                    <Input value={low} margin="dense" onChange={changeLow} inputProps={{step: "any", min: min, max: max, type: 'number' }} />
                 </Grid>
                 <Grid item xs={6}>
-                    <Slider
-                        value={[low, high]}
-                        onChange={handleChange}
-                        //valueLabelDisplay="none"
-                        min={ min }
-                        max={ max }
-                        aria-labelledby="range-slider"
-                        getAriaValueText={() => `${value}°C`}
-                    />
+                    <Slider value={[low, high]} onChange={handleChange} min={ min } max={ max } />
                 </Grid>
                 <Grid item xs={3}>
-                    <Input
-                        value={high}
-                        margin="dense"
-                        onChange={changeHigh}
-                        //onBlur={handleBlur}
-                        inputProps={{
-                        //step: 10,
-                        min: 0,
-                        max: 100,
-                        type: 'number',
-                        'aria-labelledby': 'input-slider',
-                        }}
-                    />
+                    <Input value={high} margin="dense" onChange={changeHigh} inputProps={{min: min, max: max, type: 'number', }} />
                 </Grid>
             </Grid>
         </div>

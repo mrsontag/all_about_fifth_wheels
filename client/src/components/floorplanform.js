@@ -3,6 +3,17 @@ import _ from 'lodash';
 import LinkedImage from "./linked_image";
 import styles from "./floorplanform.module.css";
 import Axios from "axios";
+import ValueBar from "./value_bar";
+
+const TextInput = props => {
+    const { name, text, value, updateValue } = props;
+    return (
+        <div>
+            <label htmlFor={name}>{text}</label>
+            <input type="text" name={name} value={value} onChange={(e) => updateValue(e)} />
+        </div>
+    )
+}
 
 const FloorPlanForm = props => {
     const [ data, setData ] = useState("");
@@ -40,6 +51,10 @@ const FloorPlanForm = props => {
         }
     }
 
+    const setSlider = (name, value) => {
+        setData({...data, [name]: value})
+    }
+    
     return (
         <form onSubmit={submitForm} className="blurrywhite">
             <div className={styles.columns}>
@@ -65,29 +80,15 @@ const FloorPlanForm = props => {
                     </select>
 
                 </div>
-                <div>
-                    <label htmlFor="model">Model:</label>
-                    <input type="text" name="model" value={data.model ?? ""} onChange={(e) => updateValue(e)} />
-                </div>
-                <div>
-                    <label htmlFor="pagelink">Link to Manufacturer Page:</label>
-                    <input type="text" name="pagelink" value={data.pagelink ?? ""} onChange={(e) => updateValue(e)} />
-                </div>
-                <div>
-                    <label htmlFor="floorplanimg">Image of Floor Plan:</label>
-                    <input type="text" name="floorplanimg" value={data.floorplanimg ?? ""} onChange={(e) => updateValue(e)} />
-                </div>
-                <a href={data.floorplanimg} target="_blank">
-                    <LinkedImage src={data.floorplanimg} width="300" height="300" />
-                </a>
-                <div>
-                    <label htmlFor="threedtourlink">Three-D Tour Link:</label>
-                    <input type="text" name="threedtourlink" value={data.threedtourlink ?? ""} onChange={(e) => updateValue(e)} />
-                </div>
-                <a href={data.threedtourlink} target="_blank">Test Link for 3D Floorplan</a>
+                <TextInput name="model" value={data.model ?? ""} text="Model:" updateValue={updateValue} />
+                <TextInput  name="pagelink" value={data.pagelink ?? ""} text="Link to Manufacturer Page:" updateValue={updateValue} />
+                <TextInput name="floorplanimg" text="Image of Floor Plan:" value={data.floorplanimg ?? ""} updateValue={updateValue}/>
+                <LinkedImage linkto={data.floorplanimg} src={data.floorplanimg} width="300" height="300" />
+                <TextInput name="threedtourlink" text="Three-D Tour Link:" value={data.threedtourlink ?? ""} updateValue={updateValue} />
+                <a href={"https://" + data.threedtourlink} target="_blank">Test Link for 3D Floorplan</a>
             </div>
             <div className={styles.columns}>
-            
+                <ValueBar name="Length" value={data["specs.length"] ?? 60} fieldname="Length:" setValue={(value) => setSlider("specs.length", value)} min={25} max={60} defvalue={60} />
                 <div>
                     <label htmlFor="Length">Length:</label>
                     <input type="text" name="specs.length" value={data["specs.length"] ?? ""} onChange={(e) => updateValue(e)} />
