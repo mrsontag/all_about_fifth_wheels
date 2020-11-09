@@ -1,0 +1,20 @@
+.buttons {
+    margin: 0px 50px;
+}
+
+.buttoncontainer {
+    text-align: center;
+}
+
+h2 {
+    display: inline-block;
+    margin: 0px 10px;   
+}
+
+h3 {
+    margin: 10px;
+}
+.editbutton {
+    display: inline-block;
+    float: right;
+}

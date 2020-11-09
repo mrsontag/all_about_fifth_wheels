@@ -20,7 +20,7 @@ const Search = props => {
                 max: 60
             },
             "specs.height": {
-                name: "Width",
+                name: "Height",
                 type: "range",
                 min: 10,
                 max: 20

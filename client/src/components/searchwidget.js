@@ -35,7 +35,7 @@ const SearchWidget = props => {
         }
         return(
             <>
-                Filter criteria: {criteriatext}
+                <strong>Criteria:</strong> {criteriatext}
             </>
         );
     }
@@ -46,18 +46,15 @@ const SearchWidget = props => {
                 <div className={styles.floatingburger} onClick={(e) => e.stopPropagation()}>
                     <CriteriaHamburger criteria={criteria} setCriteria={setCriteria}/>
                 </div>
-                <div>Show Search</div>
                 </>
             )
         }
-        return (
-            <div className={styles.criteria_summary} onClick={(e) => { e.stopPropagation(); setShowSearch(true)}}>{criteriaText()}</div>
-        )
     }
 
     return (
         <>
         { SearchBlock() }
+        <div className={styles.criteria_summary + " blurrywhite"} onClick={(e) => { e.stopPropagation(); setShowSearch(true)}}>{criteriaText()}</div>
         </>
     )
 }

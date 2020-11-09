@@ -1,14 +1,16 @@
 import React from 'react';
-
+import { inchesToFeet } from "./feetinches";
+import _ from 'lodash';
 
 const SpecsTable = props => {
     const { specs } = props;
     
+    const convert = ["Length", "Width", "Height"]
     const showwhich = {
         "Length": "length",
         "Width": "width",
         "Height": "height",
-        "Weight": "weight"
+        "GVWR": "weights.gvwr"
     }
 
     return (
@@ -18,7 +20,7 @@ const SpecsTable = props => {
                     return (
                         <tr key={key}>
                             <td>{key}: </td>
-                            <td>{specs[showwhich[key]]}</td>
+                            <td>{ convert.includes(key) ? inchesToFeet(_.get(specs,showwhich[key])) : _.get(specs,showwhich[key])}</td>
                         </tr>
                     )
                 })}

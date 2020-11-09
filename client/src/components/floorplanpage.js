@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import LinkedImage from './linked_image';
 import SpecsTable from './specstable';
 import Axios from 'axios';
+import Button from '@material-ui/core/Button';
+import { useNavigate } from '@reach/router';
+import styles from './floorplanpage.module.css';
+
 //import { Link } from '@reach/router';
 
 const FloorPlanPage = props => {
@@ -24,14 +28,20 @@ const FloorPlanPage = props => {
     const ThreeDLink = () => {
         if(typeof(fiver.threedtourlink) !== "undefined") {
             return(
-                <a href={fiver.threedtourlink}>Link to 3D Walkthrough</a>
+                <Button className = {styles.buttons} color="primary" onClick={()=> Navigate(fiver.threedtourlink)}>Link to 3D Walkthrough</Button>
             )
         }
         return;
     }
+
+    const Navigate = useNavigate();
+
     return (
-        <div>
+        <div className="blurrywhite">    
             <h2>{fiver.brand + " " + fiver.model}</h2>
+            <div className={styles.editbutton}>
+                <Button  color="default" size="small" onClick={()=> Navigate("/floorplan/edit/" + props.id)} >Edit</Button>
+            </div>
             <h3>{fiver.manufacturer}</h3>
             <LinkedImage 
                 src={fiver.floorplanimg}
@@ -40,7 +50,10 @@ const FloorPlanPage = props => {
                 width="900" 
                 height="600" 
             />
-            { ThreeDLink() }
+            <div className={styles.buttoncontainer}>
+                <Button className = {styles.buttons} color="primary" onClick={()=> Navigate(fiver.pagelink)}>Manufacturers Page</Button>
+                { ThreeDLink() }
+            </div>
             <div className="half-column">
                 <SpecsTable specs={leftside} />
             </div>

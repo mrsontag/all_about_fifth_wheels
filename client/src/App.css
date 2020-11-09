@@ -31,3 +31,28 @@
   margin: 15px;
   padding: 5px;
 }
+
+.fullpage {
+  display: block;
+  width:calc(100% - 40px);
+  min-height:600px;
+}
+
+.smalllogo {
+  max-width: 25px;
+  max-height: 25px;
+  margin: 2px;
+}
+
+.inlineblock {
+  display: inline-block;
+}
+
+.spaced {
+  display:inline-block; 
+  margin: 15px 0px;
+}
+
+.shortinput {
+  width: 50px;
+}

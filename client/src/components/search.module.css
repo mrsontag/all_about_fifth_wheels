@@ -11,6 +11,6 @@
 
 .criteria_summary {
     background-color: white;
-    width: 970px;
+    width: calc(100% - 40px);
 }
 
