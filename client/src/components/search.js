@@ -16,14 +16,14 @@ const Search = props => {
             "specs.length": {
                 name: "Length",
                 type: "range",
-                min: 20,
-                max: 60
+                min: 144,
+                max: 720
             },
             "specs.height": {
                 name: "Height",
                 type: "range",
-                min: 10,
-                max: 20
+                min: 144,
+                max: 160
             }
         });
 
@@ -37,7 +37,12 @@ const Search = props => {
         setResults(allplans.filter(matchesSearch));
     }, [criteria]);
 
-    
+    const showwhich = {
+        "Length": "length",
+        "Width": "width",
+        "Height": "height",
+        "GVWR": "weights.gvwr"
+    }
     
     const matchesSearch = (fiver) => {
         let filterkeys = Object.keys(criteria);
@@ -66,7 +71,7 @@ const Search = props => {
             <div>
                 { results.length > 0 && results.map( (fiver) => {
                     return( 
-                        <SmallFloorPlan specs={fiver}/>   
+                        <SmallFloorPlan specs={fiver} showwhich={showwhich}/>   
                     )})
                 }
             </div>

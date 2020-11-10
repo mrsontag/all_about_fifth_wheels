@@ -31,10 +31,10 @@ const ValueBar = props => {
         <div >
             {fieldname}
             <Grid container spacing={2} alignItems="center">
-                <Grid item xs={8}>
+                <Grid item xs={10}>
                     <Slider value={value} onChange={handleChange} min={ min } max={ max } />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <input className="shortinput" type="text" name={props.name + "_entry"} value={display} onChange={changeValue} onFocus={() => displayValue(value)} onBlur={() => displayValue(value)} />
                 </Grid>
             </Grid>

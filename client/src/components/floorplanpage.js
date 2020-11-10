@@ -17,13 +17,7 @@ const FloorPlanPage = props => {
             .catch(err => console.log(err));
     },[])
 
-    const leftside = {
-        "length": specs.length,
-        "width": specs.width,
-        "height": specs.height,
-        "weight": specs.weight,
-        "Overall Floor Plan": "tbd"
-    }
+    
 
     const ThreeDLink = () => {
         if(typeof(fiver.threedtourlink) !== "undefined") {
@@ -54,8 +48,30 @@ const FloorPlanPage = props => {
                 <Button className = {styles.buttons} color="primary" onClick={()=> Navigate(fiver.pagelink)}>Manufacturers Page</Button>
                 { ThreeDLink() }
             </div>
-            <div className="half-column">
-                <SpecsTable specs={leftside} />
+            <div className="halfcolumn">
+                <div className="halfsection">
+                    <SpecsTable specs={fiver} showwhich={{
+                        "Length": "specs.length",
+                        "Width": "specs.width",
+                        "Height": "specs.height",
+                        "GVWR": "specs.weights.gvwr"
+                    }} />
+                </div>
+                <div className="halfsection">
+                    <SpecsTable specs={fiver} showwhich={{
+                        "Fresh": "specs.tanks.fresh",
+                        "Grey": "specs.tanks.grey",
+                        "Black": "specs.tanks.black",
+                        "Propane": "specs.tanks.propane"
+                    }} />
+                </div>
+            </div>
+            <div className="halfcolumn">
+                <div className="halfsection">
+                    <SpecsTable specs={fiver} showwhich={{
+                        "Sleeps": "floorplan.sleeps",
+                    }} />
+                </div>
             </div>
         </div>
     )

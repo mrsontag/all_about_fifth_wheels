@@ -5,14 +5,15 @@ import styles from "./floorplanform.module.css";
 import Axios from "axios";
 import ValueBar from "./value_bar";
 import { useNavigate } from '@reach/router';
-
+import Button from '@material-ui/core/Button';
+import Select from "./select.js";
 
 const TextInput = props => {
     const { name, text, value, updateValue } = props;
     return (
-        <div>
+        <div className="inlineblock smmarg">
             <label htmlFor={name}>{text}</label>
-            <input type="text" name={name} value={value} onChange={(e) => updateValue(e)} />
+            <input className="leftmarg" type="text" name={name} value={value} onChange={(e) => updateValue(e)} />
         </div>
     )
 }
@@ -83,14 +84,11 @@ const FloorPlanForm = props => {
                 break;
             }
         }
-        if(!found) { setBrands([])}
+        if(!found) setBrands([]);
     }
     const updateValue = (e) => {
-
         setData({...data, [e.target.name]: e.target.value})
-        if(e.target.name === "manufacturer") {
-            updateBrandList(e.target.value);
-        }
+        if(e.target.name === "manufacturer") updateBrandList(e.target.value);
     }
 
     const setSlider = (name, value) => {
@@ -99,46 +97,93 @@ const FloorPlanForm = props => {
 
     return (
         <form onSubmit={submitForm} className="blurrywhite">
-            <div className={styles.columns}>
-                <div>
-                    <label htmlFor="manufacturer">Manufacturer:</label>
-                    <select name="manufacturer" value={data.manufacturer ?? ""} onChange={(e) => updateValue(e)}>
-                        <option value=""></option>
-                        {  options.length && options.map(option => { 
-                            return(
-                                <option value={option.manufacturer}>{option.manufacturer}</option>
-                            )
-                        })}
-                    </select>
+            {  /*left column*/ }
+            
+            <div className="halfcolumn">
+                <div className="halfsection">
+                    <Select  name="manufacturer"  value={data.manufacturer ?? ""} showtext="Manufacturer: "
+                        list={options} keyname="manufacturer" updateValue={updateValue} showblank={true} />
+                    <Select name="brand" value={data.brand ?? ""} showtext="Brand: "
+                        list={brands} keyname="name" updateValue={updateValue} showblank={true} />
+                    <TextInput name="model" value={data.model ?? ""} text="Model:" updateValue={updateValue} />
+                    <TextInput  name="pagelink" value={data.pagelink ?? ""} text="Link to Model Page:" 
+                        updateValue={updateValue} />
+                    <a className="nodec" href={data.pagelink} target="_blank">
+                        <Button type="button" size="small" variant="contained" color="primary" onClick="">Test</Button></a>
+                    <TextInput name="floorplanimg" text="Image of Floor Plan:" value={data.floorplanimg ?? ""} 
+                        updateValue={updateValue}/>
+                    <LinkedImage imgid="tempimage" letmagnify={3} linkto={data.floorplanimg} src={data.floorplanimg} 
+                        width="300" height="300" />
+                    <TextInput name="threedtourlink" text="Three-D Tour Link:" value={data.threedtourlink ?? ""} 
+                        updateValue={updateValue} />
+                    <a className="nodec" href={data.threedtourlink} target="_blank">
+                        <Button type="button" size="small" variant="contained" color="primary" onClick="">Test</Button></a>
                 </div>
-                <div>
-                    <label htmlFor="brand">Brand:</label>
-                    <select name="brand" value={data.brand ?? ""} onChange={(e) => updateValue(e)}>
-                        <option value=""></option>
-                        { brands.length && brands.map(brand => {
-                            return (
-                                <option value={brand.name}>{brand.name}</option>
-                            )
-                        })}
-                    </select>
+                <div className="halfsection">
+                    <h5 className={styles.header5}>Weights and Capacities:</h5>
+                    <ValueBar name="GVWR" value={data["specs.weights.gvwr"] ?? 12500} fieldname="GVWR:" setValue={(value) => setSlider("specs.weights.gvwr", value)} min={5000} max={25000} defvalue={12500} />
+                    <ValueBar name="Hitch" value={data["specs.weights.hitch"] ?? 2500} fieldname="Hitch:" setValue={(value) => setSlider("specs.weights.hitch", value)} min={1000} max={6000} defvalue={2500} />
+                </div>
+                <div className="halfsection">
+                    <h5 className={styles.header5}>Floorplan Features:</h5>
+                    <ValueBar name="Sleeps" value={data["floorplan.sleeps"] ?? 4 } fieldname="Sleeps (max):" setValue={(value) => setSlider("floorplan.sleeps", value)} min={0} max={16} defvalue={4} />
+                    
+                </div>
+                <Button type="button" variant="contained" color="primary" onClick={
+                    () => props.id ? 
+                    Navigate("http://localhost:3000/floorplan/" + props.id) : 
+                    Navigate("http://localhost:3000/search/")
+                }>Go Back</Button>
+                <Button type="submit" variant="contained" color="primary">Submit</Button>
+            </div>
 
+            {  /*right column*/ }
+            <div className="halfcolumn">
+                <div className="halfsection">
+                    <h5 className={styles.header5}>Dimensions:</h5>
+                    <ValueBar name="Length" intoft={true} value={data["specs.length"] ?? 60} fieldname="Length:" setValue={(value) => setSlider("specs.length", value)} min={144} max={720} defvalue={60} />
+                    <ValueBar name="Width" intoft={true} value={data["specs.width"] ?? 60} fieldname="Width:" setValue={(value) => setSlider("specs.width", value)} min={90} max={110} defvalue={96} />
+                    <ValueBar name="Height" intoft={true} value={data["specs.height"] ?? 60} fieldname="Height:" setValue={(value) => setSlider("specs.height", value)} min={100} max={168} defvalue={162} />
+                    
                 </div>
-                <TextInput name="model" value={data.model ?? ""} text="Model:" updateValue={updateValue} />
-                <TextInput  name="pagelink" value={data.pagelink ?? ""} text="Link to Manufacturer Page:" updateValue={updateValue} />
-                <TextInput name="floorplanimg" text="Image of Floor Plan:" value={data.floorplanimg ?? ""} updateValue={updateValue}/>
-                <LinkedImage linkto={data.floorplanimg} src={data.floorplanimg} width="300" height="300" />
-                <TextInput name="threedtourlink" text="Three-D Tour Link:" value={data.threedtourlink ?? ""} updateValue={updateValue} />
-                <a href={"https://" + data.threedtourlink} target="_blank">Test Link for 3D Floorplan</a>
+                
+                <div className="halfsection">
+                    <h5 className={styles.header5}>Tanks:</h5>
+                    <ValueBar name="Fresh" value={data["specs.tanks.fresh"] ?? 50} fieldname="Fresh Water:" setValue={(value) => setSlider("specs.tanks.fresh", value)} min={0} max={150} defvalue={50} />
+                    <ValueBar name="Grey" value={data["specs.tanks.grey"] ?? 50} fieldname="Grey Water:" setValue={(value) => setSlider("specs.tanks.grey", value)} min={0} max={150} defvalue={50} />
+                    <ValueBar name="Black" value={data["specs.tanks.black"] ?? 50} fieldname="Black Water:" setValue={(value) => setSlider("specs.tanks.black", value)} min={0} max={150} defvalue={50} />
+                    <ValueBar name="Propane" value={data["specs.tanks.propane"] ?? 60} fieldname="Propane:" setValue={(value) => setSlider("specs.tanks.propane", value)} min={0} max={150} defvalue={50} />
+                </div>
             </div>
-            <div className={styles.columns}>
-                <ValueBar name="Length" intoft={true} value={data["specs.length"] ?? 60} fieldname="Length:" setValue={(value) => setSlider("specs.length", value)} min={144} max={720} defvalue={60} />
-                <ValueBar name="Width" intoft={true} value={data["specs.width"] ?? 60} fieldname="Width:" setValue={(value) => setSlider("specs.width", value)} min={90} max={110} defvalue={96} />
-                <ValueBar name="Height" intoft={true} value={data["specs.height"] ?? 60} fieldname="Height:" setValue={(value) => setSlider("specs.height", value)} min={100} max={168} defvalue={162} />
-                <ValueBar name="GVWR" value={data["specs.weights.gvwr"] ?? 12500} fieldname="GVWR:" setValue={(value) => setSlider("specs.weights.gvwr", value)} min={5000} max={25000} defvalue={12500} />
-            </div>
-            <button type="submit">Submit</button>
         </form>
     )
 }
 
 export default FloorPlanForm;
+
+
+/*
+<div>
+                        <label htmlFor="manufacturer">Manufacturer:</label>
+                        <select name="manufacturer" value={data.manufacturer ?? ""} onChange={(e) => updateValue(e)}>
+                            <option value=""></option>
+                            {  options.length && options.map(option => { 
+                                return(
+                                    <option value={option.manufacturer}>{option.manufacturer}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+<div>
+                        <label htmlFor="brand">Brand:</label>
+                        <select name="brand" value={data.brand ?? ""} onChange={(e) => updateValue(e)}>
+                            <option value=""></option>
+                            { brands.length && brands.map(brand => {
+                                return (
+                                    <option value={brand.name}>{brand.name}</option>
+                                )
+                            })}
+                        </select>
+
+                    </div>
+                    */

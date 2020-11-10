@@ -38,6 +38,7 @@ const FiverSchema = new mongoose.Schema({
 		},
 		hasisland: Boolean,
 		opposingcouches: Boolean,
+		sleeps: Number
 	},
 	
 	features: {

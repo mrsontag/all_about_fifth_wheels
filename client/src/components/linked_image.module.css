@@ -1,0 +1,22 @@
+.imgcontainer {
+    position: relative;
+    margin: 0px;
+    text-align: center;
+}
+
+.imgmagnifier {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #000;
+    border-radius: 20%;
+    cursor: none;
+    width: 200px;
+    height: 200px; 
+    background-repeat: no-repeat;
+    z-index: 100;
+}
+
+.images {
+    margin: 0px auto;
+}

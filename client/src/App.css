@@ -48,6 +48,14 @@
   display: inline-block;
 }
 
+.smmarg {
+  margin: 0px  10px 2px 0px;
+}
+
+.leftmarg {
+  margin-left: 5px;
+}
+
 .spaced {
   display:inline-block; 
   margin: 15px 0px;
@@ -55,4 +63,36 @@
 
 .shortinput {
   width: 50px;
+}
+
+.veryshortinput {
+  width: 35px;
+}
+.halfcolumn {
+  display: inline-block;
+  width: 465px;
+  vertical-align: top;   
+  margin: 0px;
+  padding: 0px;
+}
+.halfsection {
+  width: 420px;
+  display: inline-block;
+  vertical-align: top;   
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
+}
+
+.nodec {
+  text-decoration: none;
+}
+
+.criteriamed {
+  width: 250px;
+}
+
+.crteriaham {
+  width: 400px;
 }

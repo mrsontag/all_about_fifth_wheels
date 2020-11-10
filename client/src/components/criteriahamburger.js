@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
         height: 224,
-        width: 400
+        width: 450
     },
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
@@ -52,9 +52,9 @@ const CriteriaHamburger = props => {
     const { criteria, setCriteria } = props;
     const [value, setValue] = React.useState(0);
     const classes = useStyles();
-    const [ length, setLength ] = useState([24,60]);
-    const [ width, setWidth ] = useState([96,103]);
-    const [ height, setHeight ] = useState([144,160]);
+    //const [ length, setLength ] = useState([24,60]);
+    //const [ width, setWidth ] = useState([96,103]);
+    //const [ height, setHeight ] = useState([144,160]);
 
     
     return (
@@ -77,7 +77,7 @@ const CriteriaHamburger = props => {
                 <p>Models:</p>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <CriteriaBar fieldname="Length: " criteriapath="specs.length" criteria={criteria} setCriteria={setCriteria} min={20} max={60} />
+                <CriteriaBar fieldname="Length: " criteriapath="specs.length" criteria={criteria} setCriteria={setCriteria} min={144} max={720} />
                 <CriteriaBar fieldname="Width: " criteriapath="specs.width" criteria={criteria} setCriteria={setCriteria} min={96} max={103} />
                 <CriteriaBar fieldname="Height: " criteriapath="specs.height" criteria={criteria} setCriteria={setCriteria} min={144} max={160} />
                 

@@ -3,15 +3,10 @@ import { inchesToFeet } from "./feetinches";
 import _ from 'lodash';
 
 const SpecsTable = props => {
-    const { specs } = props;
+    const { specs, showwhich } = props;
     
     const convert = ["Length", "Width", "Height"]
-    const showwhich = {
-        "Length": "length",
-        "Width": "width",
-        "Height": "height",
-        "GVWR": "weights.gvwr"
-    }
+    
 
     return (
         <table>
