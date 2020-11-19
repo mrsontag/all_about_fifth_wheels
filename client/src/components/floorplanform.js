@@ -71,13 +71,13 @@ const FloorPlanForm = props => {
         Axios.post("http://localhost:8000/api/fivers/new", outputobject)
             .then(res => {
                 console.log(res); 
-                Navigate("http://localhost:3000/floorplan/" + res.data.id)})
+                Navigate("http://localhost:3000/floorplan/" + res.data._id)})
             .catch(err => console.log(err));
     }
 
     const updateBrandList = (curman) => {
         let found = false;
-        for(const [key, manufacturer] of options.entries()) {
+        for(const [, manufacturer] of options.entries()) {
             if(manufacturer.manufacturer === curman) {
                 setBrands(manufacturer.brands);
                 found = true;
@@ -108,16 +108,16 @@ const FloorPlanForm = props => {
                     <TextInput name="model" value={data.model ?? ""} text="Model:" updateValue={updateValue} />
                     <TextInput  name="pagelink" value={data.pagelink ?? ""} text="Link to Model Page:" 
                         updateValue={updateValue} />
-                    <a className="nodec" href={data.pagelink} target="_blank">
-                        <Button type="button" size="small" variant="contained" color="primary" onClick="">Test</Button></a>
+                    <a className="nodec" href={data.pagelink} target="_blank" rel="noreferrer">
+                        <Button type="button" size="small" variant="contained" color="primary">Test</Button></a>
                     <TextInput name="floorplanimg" text="Image of Floor Plan:" value={data.floorplanimg ?? ""} 
                         updateValue={updateValue}/>
                     <LinkedImage imgid="tempimage" letmagnify={3} linkto={data.floorplanimg} src={data.floorplanimg} 
                         width="300" height="300" />
                     <TextInput name="threedtourlink" text="Three-D Tour Link:" value={data.threedtourlink ?? ""} 
                         updateValue={updateValue} />
-                    <a className="nodec" href={data.threedtourlink} target="_blank">
-                        <Button type="button" size="small" variant="contained" color="primary" onClick="">Test</Button></a>
+                    <a className="nodec" href={data.threedtourlink} target="_blank" rel="noreferrer">
+                        <Button type="button" size="small" variant="contained" color="primary">Test</Button></a>
                 </div>
                 <div className="halfsection">
                     <h5 className={styles.header5}>Weights and Capacities:</h5>

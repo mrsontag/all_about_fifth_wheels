@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CriteriaHamburger from "./criteriahamburger";
 import styles from "./search.module.css";
+import { inchesToFeet } from "./feetinches";
 
 
 const SearchWidget = props => {
     const { criteria, setCriteria, showsearch, setShowSearch } = props;
     
-    
     const criteriaString = (accumulator, key) => {
         if(typeof(criteria[key]) !== "undefined") {
-            console.log(accumulator);
             let currenttext;
             if(accumulator.length > 0 ) { accumulator = `${accumulator}, `}
             switch(criteria[key].type) {
                 case "range":
-                    currenttext = `${criteria[key].name}: ${criteria[key].min}-${criteria[key].max}`
+                    criteria[key].intoft ?
+                        currenttext = `${criteria[key].name}: ${inchesToFeet(criteria[key].min)}-${inchesToFeet(criteria[key].max)}` :
+                        currenttext = `${criteria[key].name}: ${criteria[key].min}-${criteria[key].max}`
                     break;
                 case "boolean":
-                    currenttext = `${criteria[key].name}: ${criteria[key].value}`;
+                    criteria[key].intoft ?
+                        currenttext = `${criteria[key].name}: ${inchesToFeet(criteria[key].value)}` : 
+                        currenttext = `${criteria[key].name}: ${criteria[key].value}`;
                     break;
                 default:
                     currenttext = `${criteria[key].name}`

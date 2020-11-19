@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import CriteriaBar from './criteria_bar';
@@ -19,7 +18,7 @@ const TabPanel = props => {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    {children}
                 </Box>
             )}
         </div>
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
         display: 'flex',
-        height: 224,
+        minHeight: 224,
         width: 450
     },
     tabs: {
@@ -52,10 +51,6 @@ const CriteriaHamburger = props => {
     const { criteria, setCriteria } = props;
     const [value, setValue] = React.useState(0);
     const classes = useStyles();
-    //const [ length, setLength ] = useState([24,60]);
-    //const [ width, setWidth ] = useState([96,103]);
-    //const [ height, setHeight ] = useState([144,160]);
-
     
     return (
         <div className={classes.root}>
@@ -66,27 +61,32 @@ const CriteriaHamburger = props => {
                 aria-label="Vertical tabs example"
                 className={classes.tabs}
             >
-                <Tab label="Builders" {...a11yProps(0)} />
+                {/*<Tab label="Builders" {...a11yProps(0)} />*/}
                 <Tab label="Specs" {...a11yProps(1)} />
-                <Tab label="Floorplans" {...a11yProps(2)} />
+                <Tab label="Tanks" {...a11yProps(2)} />
                 <Tab label="Features" {...a11yProps(3)} />
             </Tabs>
+            {/*}
             <TabPanel value={value} index={0}>
-                <p>Manufacturers:</p>
-                <p>Brands:</p>
-                <p>Models:</p>
+                <div>Manufacturers:</div>
+                <div>Brands:</div>
+                <div>Models:</div>
+            </TabPanel>*/}
+            <TabPanel value={value} index={0}>
+                <CriteriaBar fieldname="Length: " criteriapath="specs.length" criteria={criteria} setCriteria={setCriteria} min={144} max={720} intoft={true}/>
+                <CriteriaBar fieldname="Width: " criteriapath="specs.width" criteria={criteria} setCriteria={setCriteria} min={96} max={103} intoft={true} />
+                <CriteriaBar fieldname="Height: " criteriapath="specs.height" criteria={criteria} setCriteria={setCriteria} min={144} max={160} intoft={true}/>
+                <CriteriaBar fieldname="GVWR: " criteriapath="specs.weights.gvwr" criteria={criteria} setCriteria={setCriteria} min={7000} max={25000} infeet={false}/> 
             </TabPanel>
-            <TabPanel value={value} index={1}>
-                <CriteriaBar fieldname="Length: " criteriapath="specs.length" criteria={criteria} setCriteria={setCriteria} min={144} max={720} />
-                <CriteriaBar fieldname="Width: " criteriapath="specs.width" criteria={criteria} setCriteria={setCriteria} min={96} max={103} />
-                <CriteriaBar fieldname="Height: " criteriapath="specs.height" criteria={criteria} setCriteria={setCriteria} min={144} max={160} />
+            <TabPanel  value={value} index={1}>
+                <CriteriaBar fieldname="Fresh: " criteriapath="specs.tanks.fresh" criteria={criteria} setCriteria={setCriteria} min={0} max={150} intoft={false}/>
+                <CriteriaBar fieldname="Grey: " criteriapath="specs.tanks.grey" criteria={criteria} setCriteria={setCriteria} min={0} max={150} intoft={false}/>
+                <CriteriaBar fieldname="Black: " criteriapath="specs.tanks.black" criteria={criteria} setCriteria={setCriteria} min={0} max={150} intoft={false}/>
+                <CriteriaBar fieldname="Propane: " criteriapath="specs.tanks.propane" criteria={criteria} setCriteria={setCriteria} min={0} max={150} intoft={false}/>
                 
             </TabPanel>
-            <TabPanel  value={value} index={2}>
-                Floorplans
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                Features
+            <TabPanel value={value} index={2}>
+                <CriteriaBar fieldname="Sleeps: " criteriapath="floorplan.sleeps" criteria={criteria} setCriteria={setCriteria} min={2} max={15} intoft={false}/>
             </TabPanel>
 
         </div>

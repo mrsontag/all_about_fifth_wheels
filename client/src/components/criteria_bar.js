@@ -1,18 +1,22 @@
 import React, {useState} from 'react';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
-import { inchesToFeet, feetToInches } from "./feetinches";
-
+import { inchesToFeet } from "./feetinches";
+import _ from 'lodash';
 
 const CriteriaBar = props => {
-    const {fieldname, criteria, setCriteria, criteriapath, min, max} = props;
-    const [disabled, setDisabled] = useState(typeof(criteria[criteriapath]) !== "undefined")
-    const intoft = true;
+    const {fieldname, criteria, setCriteria, criteriapath, min, max, intoft = false} = props;
+
+    const [disabled, setDisabled] = useState(typeof(criteria[criteriapath]) === "undefined")
     
     const [low, setLow] = useState(criteria[criteriapath] ? criteria[criteriapath].min : min);
     const [high, setHigh] = useState(criteria[criteriapath] ? criteria[criteriapath].max : max);
-    const [displayhigh, setDisplayHigh ] = useState(inchesToFeet(criteria[criteriapath] ? criteria[criteriapath].max : max));
-    const [displaylow, setDisplayLow ] = useState(inchesToFeet(criteria[criteriapath] ? criteria[criteriapath].min : min));
+    const [displayhigh, setDisplayHigh ] = useState(intoft ? 
+        inchesToFeet(criteria[criteriapath] ? criteria[criteriapath].max : max) :
+        criteria[criteriapath] ? criteria[criteriapath].max : max);
+    const [displaylow, setDisplayLow ] = useState(intoft ? 
+        inchesToFeet(criteria[criteriapath] ? criteria[criteriapath].min : min) :
+        criteria[criteriapath] ? criteria[criteriapath].min : min);
     
     
     const handleChange = (event, newValue) => {
@@ -28,6 +32,7 @@ const CriteriaBar = props => {
                 [criteriapath]: {
                     name: fieldname,
                     type: "range",
+                    intoft: intoft ?? false,
                     min: newValue[0],
                     max: newValue[1]
                 }
@@ -71,23 +76,6 @@ const CriteriaBar = props => {
         displayHigh(event.target.value);
     };
 
-    const formattedFieldName = () => {
-        if(typeof(criteria[criteriapath]) !== "undefined") {
-            return(
-                <>
-                    {fieldname}
-                </>
-            )
-        } else {
-            return(
-                <strike>
-                    {fieldname}
-                </strike>
-            );
-        }
-        
-    }
-
     const displayHigh = (whatvalue) => {
         setDisplayHigh(document.activeElement.name === criteriapath + "_high" ? whatvalue : intoft ? inchesToFeet(whatvalue) : whatvalue);
     }
@@ -107,7 +95,7 @@ const CriteriaBar = props => {
                     {/*<Input value={low} margin="dense" onChange={changeLow} inputProps={{step: "any", min: min, max: max, type: 'number' }} />*/}
                 </Grid>
                 <Grid item xs={6}>
-                    <Slider value={[low, high]} onChange={handleChange} min={ min } max={ max } />;
+                    <Slider value={[low, high]} onChange={handleChange} min={ min } max={ max } />
                 </Grid>
                 <Grid item xs={3}>
                     <input className="veryshortinput" type="text" name={criteriapath + "_high"} value={displayhigh} onChange={changeHigh} onFocus={() => displayHigh(high)} onBlur={() => displayHigh(high)} />

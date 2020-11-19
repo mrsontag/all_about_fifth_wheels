@@ -64,27 +64,21 @@ const LinkedImage = props => {
     }
     
     const getCursorPos = (e) => {
-        let img = document.getElementById(imgid + "_img");
         let x = 0;
         let y = 0;
         e = e || window.event;
-        /* Get the x and y positions of the image: */
-        let a = img.getBoundingClientRect();
-        /* Calculate the cursor's x and y coordinates, relative to the image: */
-        x = e.pageX - a.left;
-        y = e.pageY - a.top;
-        /* Consider any page scrolling: */
+        x = e.pageX - imgcoord.left;
+        y = e.pageY - imgcoord.top;
+
+        //offset for page scrolling
         x = x - window.pageXOffset;
         y = y - window.pageYOffset;
         return { x: x, y: y };
     }
 
     useEffect(() => {
-        let img = document.getElementById(imgid + "_img");
-        let magnifier = document.getElementById(imgid + "_mag");
-        setImgCoord(img.getBoundingClientRect());
-
-    },[]);
+        setImgCoord(document.getElementById(imgid + "_img").getBoundingClientRect());
+    },[imgid]);
 
 
     const magtag = letmagnify ? <div id={imgid + "_mag"} style={{backgroundImage: `url('${src}')`}} className={styles.imgmagnifier}></div> : <> </>;

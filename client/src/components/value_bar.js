@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Slider from '@material-ui/core/Slider';
 import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input'
-import { inchesToFeet, feetToInches } from "./feetinches";
+import { inchesToFeet } from "./feetinches";
 
 const ValueBar = props => {
     const {fieldname, value, setValue, min, max, defvalue, intoft} = props;

@@ -10,10 +10,9 @@ import styles from './floorplanpage.module.css';
 
 const FloorPlanPage = props => {
     const [fiver, setFiver] = useState({});
-    const [specs, setSpecs] = useState({});
     useEffect(() => {
         Axios.get("http://localhost:8000/api/fivers/"+ props.id)
-            .then(res => { console.log(res); setFiver(res.data); setSpecs(res.data.specs) })
+            .then(res => setFiver(res.data))
             .catch(err => console.log(err));
     },[])
 

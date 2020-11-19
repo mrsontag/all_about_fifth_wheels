@@ -5,23 +5,26 @@ import SmallFloorPlan from "./smallfloorplan";
 import Axios from 'axios';
 import SearchWidget from "./searchwidget";
 
-const _ = require('lodash');
 
 const Search = props => {
     const [allplans, setAllPlans] = useState([]);
     const [results, setResults ] = useState([]);
-    const [whichcriteria, setWhichCriteria] = useState(true);
+    const [showwhich, setShowWhich] = useState(true);
     const [showsearch, setShowSearch] = useState(false);
+    const _ = require('lodash');
+
     const [criteria, setCriteria ] = useState({
             "specs.length": {
                 name: "Length",
                 type: "range",
+                intoft: true,
                 min: 144,
                 max: 720
             },
             "specs.height": {
                 name: "Height",
                 type: "range",
+                intoft: true,
                 min: 144,
                 max: 160
             }
@@ -35,13 +38,27 @@ const Search = props => {
 
     useEffect(() => {
         setResults(allplans.filter(matchesSearch));
+        setShowWhich(() => {
+            let tempobj = {};
+            for(let key in totallist) {
+                if(typeof(criteria[totallist[key]]) !=="undefined") {
+                    tempobj[key] = totallist[key]
+                }
+            }
+            return tempobj;
+        })
     }, [criteria]);
 
-    const showwhich = {
-        "Length": "length",
-        "Width": "width",
-        "Height": "height",
-        "GVWR": "weights.gvwr"
+    const totallist = {
+        "Length": "specs.length",
+        "Width": "specs.width",
+        "Height": "specs.height",
+        "GVWR": "specs.weights.gvwr",
+        "Fresh Water": "specs.tanks.fresh",
+        "Grey Water": "specs.tanks.grey",
+        "Black Water": "specs.tanks.black",
+        "Propane": "specs.tanks.propane",
+        "Sleeps": "floorplan.sleeps",
     }
     
     const matchesSearch = (fiver) => {
@@ -54,24 +71,25 @@ const Search = props => {
                         //console.log("Value is:" + value + ", Criteria Min is " + criteria[i].min + " and Max is " + criteria[i].max);
                         if( criteria[filterkeys[i]].min > value || value > criteria[filterkeys[i]].max) { return false };
                         break;
+                    default:
                 }
             }
         }
         return true;
     }
-    const filterSpecs = (fiver) => {
+    /*const filterSpecs = (fiver) => {
         if(Object.keys(criteria).length === 0 ) {
             return(fiver);
         }
         return(fiver);
-    }
+    }*/
     return(
         <div className={styles.relativepos} onClick={() => setShowSearch(false)}>
             <SearchWidget criteria={criteria} setCriteria={setCriteria} showsearch={showsearch} setShowSearch={ setShowSearch } />
             <div>
                 { results.length > 0 && results.map( (fiver) => {
                     return( 
-                        <SmallFloorPlan specs={fiver} showwhich={showwhich}/>   
+                        <SmallFloorPlan key={fiver._id} specs={fiver} showwhich={showwhich}/>   
                     )})
                 }
             </div>
@@ -81,39 +99,3 @@ const Search = props => {
 }
 
 export default Search;
-
-/*
-const changeCriteria = () => {
-        if (whichcriteria) {
-            setCriteria( {
-                "specs.length": {
-                    type: "range",
-                    min: 37,
-                    max: 45
-                },
-                "specs.height": {
-                    type: "range",
-                    min: 13.2,
-                    max: 15
-                }
-            });
-        } else {
-            setCriteria({
-                "specs.length": {
-                    type: "range",
-                    min: 20,
-                    max: 60
-                },
-                "specs.height": {
-                    type: "range",
-                    min: 10,
-                    max: 20
-                }
-            });
-        }
-        setWhichCriteria(!whichcriteria)
-    }
-
-    <button type="button" name="changecriteria" onClick={changeCriteria}>Click to change criteria</button>
-
-    */
