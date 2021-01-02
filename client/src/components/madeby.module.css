@@ -1,0 +1,22 @@
+.madeby {
+    position: fixed;
+    top: calc(95vh - 40px);
+    left: calc(90vw - 40px);
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 2px 2px 5px grey;
+    width: 130px;
+    height: 20px;
+    font-size: small;
+    font-style: italic;
+    text-decoration: underline;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0px;
+}
+
+.madeby p {
+    margin: 0px;
+    padding: 0px;
+}
