@@ -43,10 +43,10 @@ const FloorPlanForm = props => {
     }
 
     useEffect(() => {
-        Axios.get("http://localhost:8000/api/manufacturers/")
+        Axios.get("http://localhost:8001/api/manufacturers/")
             .then(res =>setOptions(res.data))
             .catch(err => console.log(err));
-        Axios.get("http://localhost:8000/api/fivers/" + props.id)
+        Axios.get("http://localhost:8001/api/fivers/" + props.id)
             .then(res => {
                 concatPaths(res.data, "");
                 setData(outputobject);
@@ -62,13 +62,13 @@ const FloorPlanForm = props => {
             _.set(outputobject, key, data[key]);
         }
         if(props.id) {
-            Axios.put("http://localhost:8000/api/fivers/update/" + props.id,outputobject )
+            Axios.put("http://localhost:8001/api/fivers/update/" + props.id,outputobject )
             .then(res => {
                 Navigate("http://localhost:3000/floorplan/" + props.id)} )
             .catch(err => console.log(err));
             return;
         }
-        Axios.post("http://localhost:8000/api/fivers/new", outputobject)
+        Axios.post("http://localhost:8001/api/fivers/new", outputobject)
             .then(res => {
                 console.log(res); 
                 Navigate("http://localhost:3000/floorplan/" + res.data._id)})

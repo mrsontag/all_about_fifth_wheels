@@ -31,7 +31,7 @@ const Search = props => {
         });
 
     useEffect(() => {
-        Axios.get("http://localhost:8000/api/fivers/")
+        Axios.get("http://localhost:8001/api/fivers/")
             .then(res => { setAllPlans(res.data); setResults(res.data) })
             .catch(err => console.log(err));
     },[])

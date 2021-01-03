@@ -11,7 +11,7 @@ import styles from './floorplanpage.module.css';
 const FloorPlanPage = props => {
     const [fiver, setFiver] = useState({});
     useEffect(() => {
-        Axios.get("http://localhost:8000/api/fivers/"+ props.id)
+        Axios.get("http://localhost:8001/api/fivers/"+ props.id)
             .then(res => setFiver(res.data))
             .catch(err => console.log(err));
     },[])

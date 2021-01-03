@@ -7,7 +7,7 @@ import styles from "./resources.module.css";
 const Resources = () => {
     const [resources, setResources] = useState([])
     useEffect(() => {
-        Axios.get("http://localhost:8000/api/resources/")
+        Axios.get("http://localhost:8001/api/resources/")
             .then(res => setResources(res.data))
             .catch(err => console.log(err));
     },[])
