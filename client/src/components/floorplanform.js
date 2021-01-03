@@ -64,14 +64,14 @@ const FloorPlanForm = props => {
         if(props.id) {
             Axios.put("http://localhost:8001/api/fivers/update/" + props.id,outputobject )
             .then(res => {
-                Navigate("http://localhost:3000/floorplan/" + props.id)} )
+                Navigate("/floorplan/" + props.id)} )
             .catch(err => console.log(err));
             return;
         }
         Axios.post("http://localhost:8001/api/fivers/new", outputobject)
             .then(res => {
                 console.log(res); 
-                Navigate("http://localhost:3000/floorplan/" + res.data._id)})
+                Navigate("/floorplan/" + res.data._id)})
             .catch(err => console.log(err));
     }
 
@@ -131,8 +131,8 @@ const FloorPlanForm = props => {
                 </div>
                 <Button type="button" variant="contained" color="primary" onClick={
                     () => props.id ? 
-                    Navigate("http://localhost:3000/floorplan/" + props.id) : 
-                    Navigate("http://localhost:3000/search/")
+                    Navigate("/floorplan/" + props.id) : 
+                    Navigate("/search/")
                 }>Go Back</Button>
                 <Button type="submit" variant="contained" color="primary">Submit</Button>
             </div>
@@ -161,29 +161,3 @@ const FloorPlanForm = props => {
 
 export default FloorPlanForm;
 
-
-/*
-<div>
-                        <label htmlFor="manufacturer">Manufacturer:</label>
-                        <select name="manufacturer" value={data.manufacturer ?? ""} onChange={(e) => updateValue(e)}>
-                            <option value=""></option>
-                            {  options.length && options.map(option => { 
-                                return(
-                                    <option value={option.manufacturer}>{option.manufacturer}</option>
-                                )
-                            })}
-                        </select>
-                    </div>
-<div>
-                        <label htmlFor="brand">Brand:</label>
-                        <select name="brand" value={data.brand ?? ""} onChange={(e) => updateValue(e)}>
-                            <option value=""></option>
-                            { brands.length && brands.map(brand => {
-                                return (
-                                    <option value={brand.name}>{brand.name}</option>
-                                )
-                            })}
-                        </select>
-
-                    </div>
-                    */
